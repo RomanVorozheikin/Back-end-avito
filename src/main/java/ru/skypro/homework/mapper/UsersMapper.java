@@ -8,9 +8,6 @@ import ru.skypro.homework.entity.User;
 
 @Component
 public class UsersMapper {
-    @Value("${path.to.default.user.photo}")
-    private String imageDir;
-
     public UserDTO mapToUserDTOFromUser(User user) {
         return new UserDTO(
                 user.getUserId(),
@@ -19,19 +16,19 @@ public class UsersMapper {
                 user.getLastName(),
                 user.getPhone(),
                 user.getRole(),
-                "/users/" + user.getUserId() + "/avatar"
+                user.getImage()
         );
     }
 
     public User mapToUserFromRegisterDTO(RegisterDTO registerDTO,String passwordEncode) {
-        User user = new User();
-        user.setEmail(registerDTO.getUsername());
-        user.setEncodedPassword(passwordEncode);
-        user.setFirstName(registerDTO.getFirstName());
-        user.setLastName(registerDTO.getLastName());
-        user.setPhone(registerDTO.getPhone());
-        user.setRole(registerDTO.getRole());
-        user.setImage(imageDir);
-        return user;
+        return new User(
+                registerDTO.getUsername(),
+                registerDTO.getFirstName(),
+                registerDTO.getLastName(),
+                registerDTO.getPhone(),
+                registerDTO.getRole(),
+                null,
+                passwordEncode
+        );
     }
 }

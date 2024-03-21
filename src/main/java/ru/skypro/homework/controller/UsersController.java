@@ -21,11 +21,6 @@ import ru.skypro.homework.service.UserService;
 public class UsersController {
     private final UserService userService;
 
-    @GetMapping(value = "/{id}/avatar", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
-    public ResponseEntity<byte[]> getAvatarUser(@PathVariable Integer id) {
-        return ResponseEntity.ok(userService.getAvatar(id));
-    }
-
     @PostMapping("/set_password")
     public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword,
                                          Authentication authentication) {
@@ -46,9 +41,10 @@ public class UsersController {
         return ResponseEntity.ok(userService.updateUserInfo(authentication.getName(),userDTO));
     }
 
-    @PatchMapping("/me/image")
-    public ResponseEntity<byte[]> updateAvatarUser(@RequestBody MultipartFile avatar,
+    @PatchMapping(value = "me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateAvatarUser(@RequestPart("image") MultipartFile image,
                                                    Authentication authentication) {
+        userService.uploadImage(image, authentication.getName());
         return ResponseEntity.ok().build();
     }
 }

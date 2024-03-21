@@ -1,18 +1,16 @@
 package ru.skypro.homework.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import ru.skypro.homework.dto.Role;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
 @Table(name = "users")
-@EqualsAndHashCode(of = "user_id")
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,4 +38,21 @@ public class User {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "author_id")
+    private List<Ad> ads;
+    @OneToMany(mappedBy = "author_id")
+    private List<Comment> comments;
+
+    public User(String email, String firstName, String lastName, String phone, Role role, String image, String encodedPassword) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.role = role;
+        this.image = image;
+        this.encodedPassword = encodedPassword;
+        this.ads = ads;
+        this.comments = comments;
+    }
 }

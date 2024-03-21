@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Schema(name = "User")
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
