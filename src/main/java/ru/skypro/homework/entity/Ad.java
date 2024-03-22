@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * @author rvorozheikin
+ */
 @Entity
 @Table(name = "ads")
 @Data
@@ -37,4 +40,13 @@ public class Ad {
 
     @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    public Ad(User author, String description, String image, Integer price, String title, List<Comment> comments) {
+        this.author = author;
+        this.description = description;
+        this.image = image;
+        this.price = price;
+        this.title = title;
+        this.comments = comments;
+    }
 }

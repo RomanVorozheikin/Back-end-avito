@@ -2,6 +2,9 @@ package ru.skypro.homework.dto;
 
 import lombok.Data;
 
+/**
+ * @author rvorozheikin
+ */
 @Data
 public class LoginDTO {
 

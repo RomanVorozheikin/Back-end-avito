@@ -6,6 +6,9 @@ import ru.skypro.homework.dto.Role;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * @author rvorozheikin
+ */
 @Entity
 @Data
 @Table(name = "users")

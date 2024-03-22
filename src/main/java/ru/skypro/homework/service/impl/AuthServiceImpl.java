@@ -12,6 +12,9 @@ import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.UserDetailsService;
 import ru.skypro.homework.service.UserService;
 
+/**
+ * @author rvorozheikin
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {

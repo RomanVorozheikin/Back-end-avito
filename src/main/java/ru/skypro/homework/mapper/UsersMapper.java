@@ -1,6 +1,5 @@
 package ru.skypro.homework.mapper;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.RegisterDTO;
 import ru.skypro.homework.dto.UserDTO;
@@ -8,6 +7,9 @@ import ru.skypro.homework.entity.User;
 
 import java.util.ArrayList;
 
+/**
+ * @author rvorozheikin
+ */
 @Component
 public class UsersMapper {
     public UserDTO mapToUserDTOFromUser(User user) {

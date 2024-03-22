@@ -9,7 +9,7 @@ create table users
     last_name VARCHAR(50),
     phone VARCHAR(50),
     encoded_password VARCHAR(255) not null,
-    image TEXT not null ,
+    image TEXT,
     role VARCHAR(50) not null
 );
 

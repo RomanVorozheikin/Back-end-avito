@@ -13,6 +13,9 @@ import ru.skypro.homework.dto.NewPassword;
 import ru.skypro.homework.dto.UserDTO;
 import ru.skypro.homework.service.UserService;
 
+/**
+ * @author rvorozheikin
+ */
 @Slf4j
 @Service
 @RequestMapping(value = "/users")
