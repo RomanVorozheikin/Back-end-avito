@@ -6,6 +6,8 @@ import ru.skypro.homework.dto.RegisterDTO;
 import ru.skypro.homework.dto.UserDTO;
 import ru.skypro.homework.entity.User;
 
+import java.util.ArrayList;
+
 @Component
 public class UsersMapper {
     public UserDTO mapToUserDTOFromUser(User user) {
@@ -28,7 +30,9 @@ public class UsersMapper {
                 registerDTO.getPhone(),
                 registerDTO.getRole(),
                 null,
-                passwordEncode
+                passwordEncode,
+                new ArrayList<>(),
+                new ArrayList<>()
         );
     }
 }

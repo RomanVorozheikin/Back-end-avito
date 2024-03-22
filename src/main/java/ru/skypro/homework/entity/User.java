@@ -39,12 +39,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "author_id")
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
     private List<Ad> ads;
-    @OneToMany(mappedBy = "author_id")
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    public User(String email, String firstName, String lastName, String phone, Role role, String image, String encodedPassword) {
+    public User(String email, String firstName, String lastName, String phone, Role role, String image, String encodedPassword,List<Ad> ads,List<Comment> comments) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
