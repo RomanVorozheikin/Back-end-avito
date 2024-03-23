@@ -3,6 +3,7 @@ package ru.skypro.homework.mapper;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.AdDto;
 import ru.skypro.homework.dto.CreateAdDto;
+import ru.skypro.homework.dto.FullAdDto;
 import ru.skypro.homework.dto.ResponseWrapperAds;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.User;
@@ -51,5 +52,19 @@ public class AdMapper {
                 ad.getTitle(),
                 ad.getPrice()
                 );
+    }
+
+    public FullAdDto mapAdAndAuthorToFullAdDto(User author, Ad ad) {
+        return new FullAdDto(
+                ad.getPk(),
+                author.getFirstName(),
+                author.getLastName(),
+                ad.getDescription(),
+                author.getEmail(),
+                author.getImage(),
+                author.getPhone(),
+                ad.getPrice(),
+                ad.getTitle()
+        );
     }
 }

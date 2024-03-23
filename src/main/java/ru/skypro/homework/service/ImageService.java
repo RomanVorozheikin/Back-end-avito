@@ -51,4 +51,9 @@ public class ImageService {
     private String buildURLTailToImage(String dir, String fileName) {
         return "/" + dir + "/" + fileName;
     }
+
+    @SneakyThrows
+    public void deleteAdImage(Integer adId) {
+        Files.deleteIfExists(Path.of(pathDirImageAd, adId + imagePostfix));
+    }
 }
