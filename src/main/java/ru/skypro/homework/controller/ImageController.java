@@ -5,6 +5,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.service.ImageService;
 
+/**
+ * @author rvorozheikin
+ */
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(value = "http://localhost:3000")
@@ -15,5 +18,10 @@ public class ImageController {
     @GetMapping(value = "/avatar/{fileName}", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getUserAvatar(@PathVariable("fileName") String fileName) {
         return imageService.getUserAvatar(fileName);
+    }
+
+    @GetMapping(value = "/ad/{adId}", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getImageAd(@PathVariable("adId") Integer adId) {
+        return imageService.getImageAd(adId);
     }
 }

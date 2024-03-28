@@ -18,6 +18,9 @@ import javax.transaction.Transactional;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * @author rvorozheikin
+ */
 @Service
 @RequiredArgsConstructor
 public class UserService {

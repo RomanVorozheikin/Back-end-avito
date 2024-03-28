@@ -12,6 +12,9 @@ import ru.skypro.homework.dto.LoginDTO;
 import ru.skypro.homework.dto.RegisterDTO;
 import ru.skypro.homework.service.AuthService;
 
+/**
+ * @author rvorozheikin
+ */
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
