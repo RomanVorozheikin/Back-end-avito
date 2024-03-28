@@ -48,9 +48,9 @@ public class AdMapper {
         return new AdDto(
                 ad.getAuthor().getUserId(),
                 ad.getImage(),
-                ad.getPk(),
+                ad.getPrice(),
                 ad.getTitle(),
-                ad.getPrice()
+                ad.getPk()
                 );
     }
 
@@ -61,7 +61,7 @@ public class AdMapper {
                 author.getLastName(),
                 ad.getDescription(),
                 author.getEmail(),
-                author.getImage(),
+                ad.getImage(),
                 author.getPhone(),
                 ad.getPrice(),
                 ad.getTitle()

@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.AdDto;
 import ru.skypro.homework.dto.CreateAdDto;
 import ru.skypro.homework.dto.FullAdDto;
+import ru.skypro.homework.dto.ResponseWrapperAds;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.mapper.AdMapper;
@@ -58,5 +59,19 @@ public class AdService {
     public void deleteById(Integer adId) {
         imageService.deleteAdImage(adId);
         adRepository.deleteById(adId);
+    }
+
+    public AdDto updateAdInfo(Ad targetAd, CreateAdDto newData) {
+        targetAd.setTitle(newData.getTitle());
+        targetAd.setPrice(newData.getPrice());
+        targetAd.setDescription(newData.getDescription());
+        save(targetAd);
+        return adMapper.mapAdToAdDto(targetAd);
+    }
+
+    @Transactional
+    public byte[] updateAdImage(Ad ad, MultipartFile image) {
+        imageService.uploadImageAd(ad.getPk(), image);
+        return imageService.getImageAd(ad.getPk());
     }
 }
