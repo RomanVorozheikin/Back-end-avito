@@ -8,6 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
+import ru.skypro.homework.dto.ad.AdDto;
+import ru.skypro.homework.dto.ad.CreateAdDto;
+import ru.skypro.homework.dto.ad.FullAdDto;
+import ru.skypro.homework.dto.ad.ResponseWrapperAds;
 import ru.skypro.homework.entity.Ad;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.exception.NonExistentCommentException;
@@ -29,16 +33,36 @@ public class AdController {
     private final AdMapper adMapper;
     private final UserService userService;
 
+    /**
+     * Method for getting all advertisements
+     * @return {@link HttpStatus#OK} with all ads in {@link ResponseWrapperAds}  instance
+     * @author rvorozheikin
+     */
     @GetMapping
     public ResponseEntity<ResponseWrapperAds> getAllAds() {
         return ResponseEntity.ok(adMapper.mapAdsListToResponseWrapperAds(adService.findAll()));
     }
 
+    /**
+     * Receiving advertisements from an authorized user
+     * @param authentication (inject) authorized user authentication info
+     * @return {@link HttpStatus#OK} with all ads of authorized user in {@link ResponseWrapperAds} instance
+     * @author rvorozheikin
+     */
     @GetMapping("/me")
     public ResponseEntity<ResponseWrapperAds> getMyAds(Authentication authentication) {
         User author = userService.findUserByEmail(authentication.getName());
         return ResponseEntity.ok(adMapper.mapAdsListToResponseWrapperAds(author.getAds()));
     }
+
+    /**
+     * Posting an ad
+     * @param authentication (inject) authorized user authentication info
+     * @param image {@link MultipartFile} image ad
+     * @param createAdDto characteristics ad
+     * @return {@link HttpStatus#CREATED} ad created by {@link AdDto} instance
+     * @author rvovrozheikin
+     */
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdDto> postAd(Authentication authentication,
                                         @RequestPart("image") MultipartFile image,
@@ -46,6 +70,13 @@ public class AdController {
         return ResponseEntity.status(HttpStatus.CREATED).body(adService.createAd(authentication.getName(), image, createAdDto));
     }
 
+    /**
+     * Getting information about an ad
+     * @param adId {@link Integer} Id ad
+     * @return {@link HttpStatus#OK} info ad with {@link FullAdDto} instance
+     * {@link HttpStatus#NOT_FOUND} if not existed
+     * @author rvorozheikin
+     */
     @GetMapping("/{id}")
     public ResponseEntity<FullAdDto> getInfoAd(@PathVariable("id") Integer adId) {
         Optional<Ad> targetAdOpt = adService.findById(adId);
@@ -53,6 +84,15 @@ public class AdController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    /**
+     * Delete ad with target {@code adId}
+     * @param authentication (inject) authorized user authentication info
+     * @param adId variable from URL
+     * @return {@link HttpStatus#OK} if target ad existed and initiator is admin or author, <br>
+     * {@link HttpStatus#NOT_FOUND} if target ad not existed, <br>
+     * {@link HttpStatus#FORBIDDEN} if initiator not admin and not author
+     * @author rvorozeikin
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAd(Authentication authentication,
                                       @PathVariable("id") Integer adId) {
@@ -66,7 +106,17 @@ public class AdController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-
+    /**
+     * Edit ad with target {@code adId}
+     * @param authentication (inject) authorized user authentication info
+     * @param adId variable from URL
+     * @param createAdDto new ad info
+     * @return {@link HttpStatus#OK} with edited ad in AdDto instance if target ad existed
+     * and initiator is admin or author, <br>
+     * {@link HttpStatus#NOT_FOUND} if target ad not existed, <br>
+     * {@link HttpStatus#FORBIDDEN} if initiator not admin and not author
+     * @author rvovrozeikin
+     */
     @PatchMapping("/{id}")
     public ResponseEntity<AdDto> updateAdInfo(
             Authentication authentication,
@@ -84,6 +134,16 @@ public class AdController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    /**
+     * Edit image of ad with target {@code adId}
+     * @param authentication (inject) authorized user authentication info
+     * @param adId variable from URL
+     * @param image {@link MultipartFile} with new image
+     * @return {@link HttpStatus#OK} with edited ad if target ad existed and initiator is admin or author, <br>
+     * {@link HttpStatus#NOT_FOUND} if target ad not existed, <br>
+     * {@link HttpStatus#FORBIDDEN} if initiator not admin and not author
+     * @author rvovrozeikin
+     */
     @PatchMapping(value = "/{id}/image",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
@@ -101,9 +161,16 @@ public class AdController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-
-    private boolean isUserAdminOrAuthor(String name, Optional<Ad> targetAdOpt) {
-        User initiator = userService.findUserByEmail(name);
+    /**
+     * Check that user is admin or ad's author
+     * @param email user email
+     * @param targetAdOpt target ad (Optional)
+     * @return {@code true} if user with {@code targetEmail} is admin or author of {@code targetAd}, <br>
+     * {@code false} if not
+     * @author rvovrozeikin
+     */
+    private boolean isUserAdminOrAuthor(String email, Optional<Ad> targetAdOpt) {
+        User initiator = userService.findUserByEmail(email);
         return initiator.getRole() == Role.ADMIN
                 || initiator.getEmail()
                 .equals(targetAdOpt.orElseThrow(NonExistentCommentException::new).getAuthor().getEmail());

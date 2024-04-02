@@ -6,6 +6,9 @@ import ru.skypro.homework.entity.Comment;
 
 import java.util.List;
 
+/**
+ * @author rvorozheikin
+ */
 @Repository
 public interface CommentRepository extends JpaRepository<Comment,Integer> {
     List<Comment> findAllByAdPk(Integer adPk);
