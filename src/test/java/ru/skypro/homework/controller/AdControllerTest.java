@@ -1,11 +1,9 @@
 package ru.skypro.homework.controller;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
@@ -97,8 +95,10 @@ class AdControllerTest {
 
     @Test
     public void deleteByAdStatusOk() {
-        User testAuthor = new User("author", "firstName", "lastName", "phone", Role.USER, "image", "12345", null, null);
-        Ad testAd = new Ad(10, testAuthor, "description", "image", 123, "title", null);
+        User testAuthor = new User(
+                "author", "firstName", "lastName", "phone", Role.USER, "image", "12345", null, null);
+        Ad testAd = new Ad(
+                10, testAuthor, "description", "image", 123, "title", null);
         Optional<Ad> adOptionalTEST = Optional.of(testAd);
 
         when(adService.findById(testAd.getPk())).thenReturn(adOptionalTEST);
@@ -106,6 +106,23 @@ class AdControllerTest {
         when(userService.findUserByEmail(testAuthor.getEmail())).thenReturn(testAuthor);
 
         ResponseEntity<?> response = adController.deleteAd(authentication, testAd.getPk());
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void updateAdInfoStatusOK() {
+        User testAuthor = new User(
+                "author", "firstName", "lastName", "phone", Role.USER, "image", "12345", null, null);
+        Ad testAd = new Ad(
+                10, testAuthor, "description", "image", 123, "title", null);
+        Optional<Ad> targetAd = Optional.of(testAd);
+
+        when(adService.findById(testAd.getPk())).thenReturn(targetAd);
+        when(authentication.getName()).thenReturn(testAuthor.getEmail());
+        when(userService.findUserByEmail(testAuthor.getEmail())).thenReturn(testAuthor);
+
+        ResponseEntity<AdDto> response = adController.updateAdInfo(authentication,testAd.getPk(),null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
