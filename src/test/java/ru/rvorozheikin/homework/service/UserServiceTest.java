@@ -9,7 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.rvorozheikin.homework.dto.Role;
-import ru.rvorozheikin.homework.dto.user.NewPassword;
 import ru.rvorozheikin.homework.dto.user.RegisterDTO;
 import ru.rvorozheikin.homework.dto.user.UserDTO;
 import ru.rvorozheikin.homework.entity.User;
@@ -18,9 +17,11 @@ import ru.rvorozheikin.homework.repository.UserRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author rvorozheikin
+ */
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
     @Mock
@@ -81,5 +82,4 @@ class UserServiceTest {
 
         assertInstanceOf(UserDTO.class, result);
     }
-
 }

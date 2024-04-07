@@ -15,6 +15,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+/**
+ * @author rvorozheikin
+ */
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest {
     @Mock

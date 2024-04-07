@@ -19,6 +19,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author rvorozheikin
+ */
 @ExtendWith(MockitoExtension.class)
 class AdServiceTest {
     @Mock

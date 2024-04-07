@@ -21,6 +21,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author rvorozheikin
+ */
 @ExtendWith(MockitoExtension.class)
 class CommentServiceTest {
     @Mock
